@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "description": "Generates a report from GitHub CodeQL and Dependency information",
   "scripts": {
-    "package": "npm run build && ncc build --source-map"
+    "package": "ncc build index.js -o dist"
   },
   "keywords": [],
   "author": "Peter Murray",

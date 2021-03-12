@@ -1,40 +1,46 @@
-name: Build Bundle Executables
-
+name: Build and package GitHub Action
 on:
-  workflow_dispatch:
+  push
 
 jobs:
-  build:
-    strategy:
-      matrix:
-        include:
-          - type: linux-x64
-          - type: mac-x64
-          - type: windows-x64
-
+  build-action-dist:
     runs-on: ubuntu-latest
-    
     steps:
-      - name: Checkout Sources
-        uses: actions/checkout@v2
-
-      - name: Install Node.js
-        uses: actions/setup-node@v1
+      - name: Get the current branch name
+        shell: bash
+        run: echo "::set-output name=branch::${GITHUB_REF#refs/heads/}"
+        id: myref
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+      - run: npm install
+      - run: npm run-script package
+      - uses: EndBug/add-and-commit@v7 # You can change this to use a specific version
         with:
-          node-version: 12
+          # The arguments for the `git add` command (see the paragraph below for more info)
+          # Default: '.'
+          add: 'dist'
 
-      - name: Install Dependencies
-        run: npm ci
+          # The message for the commit
+          # Default: 'Commit from GitHub Actions (name of the workflow)'
+          message: 'dist release 📦 - created via Actions'
 
-      - name: Build Executable
-        run: npm run build-exe-${{ matrix.type }}
+          # The flag used on the pull strategy
+          # Default: '--no-rebase'
+          # pull_strategy: '--no-rebase or --no-ff or --rebase'
 
-      - name: npm pack
-        run: npm pack
+          # Whether to push the commit and, if any, its tags to the repo. It can also be used to set the git push arguments (see the paragraph below for more info)
+          # Default: true
+          #push: false
 
-      - name: Attach artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: github-security-report-bundle-${{ matrix.type }}
-          path: github-security-report-bundle.zip
+          # Whether to use the --signoff option on `git commit` (only `true` and `false` are accepted)
+          # Default: false
+          # signoff: true
 
+          # Arguments for the git tag command (the tag name always needs to be the first word not preceded by an hyphen)
+          # Default: ''
+          # tag: 'v1.0.0 --force'
+            #- uses: tool3/ncc@master <---- dones't work with non-main branch
+            #  with:
+            #    github_token: ${{ secrets.GITHUB_TOKEN }}
+            #    src: 'index.js'
+            #    branch: ${{ steps.myref.outputs.branch }} #<--- problem with how they fetch head....
