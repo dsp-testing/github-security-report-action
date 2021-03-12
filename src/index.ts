@@ -197,7 +197,6 @@ let temp_vuln:Vulnerability = new Vulnerability(temp_vuln_data);
       vulnAlert: temp_vuln,
       repository: getRequiredInputValue('repository'),
       octokit: new Octokit({auth: token}),
-
       sarifReportDirectory: getRequiredInputValue('sarifReportDir'),
       outputDirectory: getRequiredInputValue('outputDir'),
 
