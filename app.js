@@ -8,7 +8,7 @@ process.env.TZ = 'UTC'
 module.exports = robot => {
   robot.on(['create', 'workflow_dispatch', 'repository_dispatch'], (context) => {
 
-    let file = { content: "<h1>Welcome to html-pdf-node</h1>" };
+    let html = { content: "<h1>Welcome to html-pdf-node</h1>" };
 
     const fetcher = puppeteer.createBrowserFetcher({ path: process.env.GITHUB_WORKSPACE });
 
@@ -18,7 +18,7 @@ module.exports = robot => {
           .then(browser => {
             return browser.newPage()
               .then(page => {
-                return page.setContent(html)
+                return page.setContent(html.content)
                   .then(() => {
                     let tempfile = page.pdf({ path: file, format: 'A4' })
                   });
