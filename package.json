@@ -14,7 +14,8 @@
     "@actions/core": "^1.2.6",
     "@actions/io": "^1.0.2",
     "@octokit/rest": "^18.0.15",
-    "html-pdf-node": "1.0.7"
+    "html-pdf-node": "1.0.7",    
+    ß"puppeteer-core": "^5.5.0"
   },
   "devDependencies": {
     "@octokit/types": "^5.5.0",
