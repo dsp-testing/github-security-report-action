@@ -1,9 +1,7 @@
-var html_to_pdf = require('html-pdf-node');
 const puppeteer = require('puppeteer-core');
 
 // Use UTC for for all Date parsing
 process.env.TZ = 'UTC'
-
 
 module.exports = robot => {
   robot.on(['create', 'workflow_dispatch', 'repository_dispatch'], (context) => {
@@ -14,13 +12,14 @@ module.exports = robot => {
 
     let outfile = fetcher.download('782078')//TODO need to store and inject this
       .then(revisionInfo => {
-        return puppeteer.launch({ executablePath: revisionInfo.executablePath })
+        return puppeteer.launch({ args: ['--no-sandbox --disable-setuid-sandbox'], executablePath: revisionInfo.executablePath })
           .then(browser => {
             return browser.newPage()
               .then(page => {
                 return page.setContent(html.content)
                   .then(() => {
-                    let tempfile = page.pdf({ path: file, format: 'A4' })
+                    console.log('printing pdf', process.env.GITHUB_WORKSPACE+"vuln-output-puppeteer.pdf");
+                    //let tempfile = page.pdf({ path: process.env.GITHUB_WORKSPACE+"vuln-output-puppeteer.pdf", format: 'A4' })
                   });
               })
               .then(() => {
@@ -28,7 +27,7 @@ module.exports = robot => {
               });
           })
           .then(() => {
-            return file;
+            return '';
           });
       });
   });

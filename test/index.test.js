@@ -17,6 +17,5 @@ let robot = new Probot({
 })
 
 plugin(robot)
-robot.receive({id:1,name:"repository_dispatch", payload: event_payload}).then(result =>
-    console.log(result));
+robot.receive({id:1,name:"repository_dispatch", payload: event_payload});
     
