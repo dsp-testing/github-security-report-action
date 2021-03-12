@@ -4,7 +4,7 @@ const puppeteer = require('puppeteer-core');
 process.env.TZ = 'UTC'
 
 module.exports = function (robot) {
-  robot.on(['repository_vulnerability_alert','repo_vulnerability_alert', 'workflow_dispatch', 'repository_dispatch'], (context) => {
+  robot.on(['repository_vulnerability_alert','workflow_dispatch', 'repository_dispatch'], (context) => {
     let html = { content: '' };
     if (context.payload.hasOwnProperty("alert")) {
       html = {
@@ -14,7 +14,7 @@ module.exports = function (robot) {
     <h1>A new Vulnerability has been found in your dependencies</h1><hr>
     <img sec="https://redmonk.com/rstephens/files/2018/08/business.jpg" style="float:left;"/>
     <ul style="float:left;">
-      <li>Package name: ${context.paylad.alert.affected_package_name}</li>
+      <li>Package name: ${context.payload.alert.affected_package_name}</li>
       <li>Affected range: ${context.payload.alert.affected_range}</li>
       <li>Vuln created as: {context.payload.alert.created_at}</li>
     </ul>
