@@ -14,9 +14,9 @@ module.exports = function (robot) {
     <h1>A new Vulnerability has been found in your dependencies</h1><hr>
     <img src="https://redmonk.com/rstephens/files/2018/08/business.jpg" style="float:left;"/>
     <ul style="float:left;">
-      <li>Package name: ${context.paylad.alert.affected_package_name}</li>
+      <li>Package name: ${context.payload.alert.affected_package_name}</li>
       <li>Affected range: ${context.payload.alert.affected_range}</li>
-      <li>Vuln created as: {context.payload.alert.created_at}</li>
+      <li>Vuln created as: ${context.payload.alert.created_at}</li>
     </ul>
     </body>
     </html>
