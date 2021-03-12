@@ -27,7 +27,7 @@ module.exports = function (robot) {
       <html>
       <body>
       <h1>A new Vulnerability has been found in your dependencies</h1><hr>
-      <img sec="https://redmonk.com/rstephens/files/2018/08/business.jpg" style="float:left;"/>
+      <img src="https://redmonk.com/rstephens/files/2018/08/business.jpg" style="float:left;"/>
       <ul style="float:left;">
         <li>Package name: data-tbd</li>
         <li>Affected range: tbd</li>
