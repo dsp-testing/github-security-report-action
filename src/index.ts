@@ -5,7 +5,8 @@ import { Octokit } from '@octokit/rest';
 
 async function run(): Promise<void> {
   
-  
+  console.log('payload',github.context.payload);
+
   let temp_event = {
   "action": "vuln_alert_created",
   "alert": {
