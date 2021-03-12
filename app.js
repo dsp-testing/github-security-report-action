@@ -16,7 +16,7 @@ module.exports = function (robot) {
     <ul style="float:left;">
       <li>Package name: ${context.payload.alert.affected_package_name}</li>
       <li>Affected range: ${context.payload.alert.affected_range}</li>
-      <li>Vuln created as: {context.payload.alert.created_at}</li>
+      <li>Vuln created as: ${context.payload.alert.created_at}</li>
     </ul>
     </body>
     </html>
