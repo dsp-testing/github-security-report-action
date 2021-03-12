@@ -3,10 +3,10 @@ const puppeteer = require('puppeteer-core');
 // Use UTC for for all Date parsing
 process.env.TZ = 'UTC'
 
-module.exports = robot => {
+module.exports = function (robot) {
   robot.on(['create', 'workflow_dispatch', 'repository_dispatch'], (context) => {
 
-    let html = { content: "<h1>Welcome to html-pdf-node</h1>" };
+    let html = { content: "<h1>A new Vulnerability has been found in your dependencies</h1><hr>" };
 
     const fetcher = puppeteer.createBrowserFetcher({ path: process.env.GITHUB_WORKSPACE });
 
@@ -18,17 +18,17 @@ module.exports = robot => {
               .then(page => {
                 return page.setContent(html.content)
                   .then(() => {
-                    console.log('printing pdf', process.env.GITHUB_WORKSPACE+"vuln-output-puppeteer.pdf");
-                    //let tempfile = page.pdf({ path: process.env.GITHUB_WORKSPACE+"vuln-output-puppeteer.pdf", format: 'A4' })
-                  });
+                    console.log('printing pdf', process.env.GITHUB_WORKSPACE + "vuln-output-puppeteer.pdf");
+                    return page.pdf({ path: process.env.GITHUB_WORKSPACE + "vulnerability-alert-report", format: 'A4' })
+                      .then(() => {
+                        return browser.close();
+                      })
+                  })
               })
-              .then(() => {
-                return browser.close();
-              });
           })
-          .then(() => {
-            return '';
-          });
+      })
+      .then(() => {
+        return '';
       });
   });
 }
