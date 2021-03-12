@@ -2,6 +2,11 @@ import ReportGenerator from './ReportGenerator';
 const github = require('@actions/github');
 import * as core from '@actions/core';
 import { Octokit } from '@octokit/rest';
+import Vulnerability from './dependencies/Vulnerability';
+import {
+  VulnerabilityAlert, SecurityVulnerability
+} from './dependencies/DependencyTypes';
+
 
 async function run(): Promise<void> {
   
@@ -160,11 +165,36 @@ async function run(): Promise<void> {
   }
 };
   
+let alert = Object.assign({createdAt:temp_event.alert.created_at,dismisser:{login:'', name:''},dismissedAt:'', dismissReason:'',
+vulnerableManifestFilename:'', vulnerableRequirements:'', vulnerableManifestPath:'', securityVulnerability: { package: {
+  ecosystem: '',
+  name: temp_event.alert.affected_package_name
+},
+severity: '',
+vulnerableVersionRange: ''} ,
+ securityAdvisoryts:'', securityAdvisory:{
+  databaseId: '',
+  id: '',
+  summary: '',
+  severity: '',
+  description: '',
+  ghsaId: '',
+  identifiers: {
+    type: '',
+    value: '',
+  },
+  permalink: '',
+  publishedAt: ''
+ }, id:''},temp_event.alert);
+
+let temp_vuln_data:VulnerabilityAlert = alert;
+let temp_vuln:Vulnerability = new Vulnerability(temp_vuln_data);
+
   try {
     const token = getRequiredInputValue('token');
 
     const generator = new ReportGenerator({
-      vulnAlert: temp_event,
+      vulnAlert: temp_vuln,
       repository: getRequiredInputValue('repository'),
       octokit: new Octokit({auth: token}),
 

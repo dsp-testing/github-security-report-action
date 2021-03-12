@@ -9,7 +9,7 @@ inputs:
 
   sarifReportDir:
     description: The CodeQL output directory for SARIF report(s).
-    required: true
+    required: false
     default: "../results"
 
   outputDir:
