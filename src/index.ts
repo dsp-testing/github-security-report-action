@@ -5,7 +5,7 @@ import { Octokit } from '@octokit/rest';
 
 async function run(): Promise<void> {
   
-  console.log('payload',github.context.payload);
+  console.log(github.context.payload);
 
   let temp_event = {
   "action": "vuln_alert_created",
@@ -164,6 +164,7 @@ async function run(): Promise<void> {
     const token = getRequiredInputValue('token');
 
     const generator = new ReportGenerator({
+      vulnAlert: temp_event,
       repository: getRequiredInputValue('repository'),
       octokit: new Octokit({auth: token}),
 

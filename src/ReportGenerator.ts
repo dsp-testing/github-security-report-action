@@ -7,6 +7,7 @@ import * as path from 'path';
 import { mkdirP } from '@actions/io';
 
 export type ReportGeneratorConfig = {
+  vulnAlert: object,
   repository: string,
   octokit: Octokit,
 
