@@ -6,15 +6,16 @@
     "package": "ncc build index.js -o dist"
   },
   "keywords": [],
-  "author": "Peter Murray",
+  "author": "Jamie Jones",
   "license": "MIT",
   "dependencies": {
     "@octokit/action": "^3.5.0",
+    "probot": "^10.9.0",
     "@probot/adapter-github-actions": "^3.0.1",
     "@actions/core": "^1.2.6",
     "@actions/io": "^1.0.2",
     "@octokit/rest": "^18.0.15",
-    "html-pdf-node": "1.0.7",    
+    "html-pdf-node": "1.0.7",
     "puppeteer-core": "^5.5.0"
   },
   "devDependencies": {

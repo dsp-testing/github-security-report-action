@@ -12,6 +12,7 @@ lib
 # Binary executables
 github-security-report*
 .local-chromium/
+linux-782078/
 runtime/
 tmp/
 *.zip
