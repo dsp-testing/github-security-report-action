@@ -4,7 +4,7 @@ const puppeteer = require('puppeteer-core');
 process.env.TZ = 'UTC'
 
 module.exports = function (robot) {
-  robot.on(['create', 'workflow_dispatch', 'repository_dispatch'], (context) => {
+  robot.on(['repository_vulnerability_alert','repo_vulnerability_alert', 'workflow_dispatch', 'repository_dispatch'], (context) => {
     let html = { content: '' };
     if (context.payload.hasOwnProperty("alert")) {
       html = {
