@@ -1,6 +1,7 @@
 import {Octokit} from "@octokit/rest";
 import GitHubCodeScanning from './codeScanning/GitHubCodeScanning';
 import GitHubDependencies from './dependencies/GitHubDependencies';
+import Vulnerability from "./dependencies/Vulnerability";
 import SarifReportFinder from './sarif/SarifReportFinder';
 import ReportData from './templating/ReportData';
 import { CollectedData } from './templating/ReportTypes';
@@ -34,18 +35,19 @@ export default class DataCollector {
     }
   }
 
-  getPayload(sarifReportDir: string): Promise<ReportData> {
+  getPayload(sarifReportDir: string, vulnAlertEvent: Vulnerability): Promise<ReportData> {
     const ghDeps = new GitHubDependencies(this.octokit)
       , codeScanning = new GitHubCodeScanning(this.octokit)
       , sarifFinder = new SarifReportFinder(sarifReportDir)
+      , vulnAlert = vulnAlertEvent
     ;
 
     return Promise.all([
       sarifFinder.getSarifFiles(),
       ghDeps.getAllDependencies(this.repo),
-      ghDeps.getAllVulnerabilities(this.repo),
+      [ vulnAlert] ,
       codeScanning.getOpenCodeScanningAlerts(this.repo),
-      codeScanning.getClosedCodeScanningAlerts(this.repo),
+      codeScanning.getClosedCodeScanningAlerts(this.repo)
     ]).then(results => {
 
       const data: CollectedData = {

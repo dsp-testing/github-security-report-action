@@ -30,7 +30,7 @@ export type CollectedData = {
   dependencies: DependencySet[],
   sarifReports: SarifFile[],
   codeScanningOpen: CodeScanningResults,
-  codeScanningClosed: CodeScanningResults,
+  codeScanningClosed: CodeScanningResults
 }
 
 export type JsonPayload = {

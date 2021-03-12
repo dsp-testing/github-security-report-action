@@ -5,9 +5,10 @@ import { createPDF } from './pdf/pdfWriter';
 import * as path from 'path';
 
 import { mkdirP } from '@actions/io';
+import Vulnerability from './dependencies/Vulnerability';
 
 export type ReportGeneratorConfig = {
-  vulnAlert: object,
+  vulnAlert: Vulnerability,
   repository: string,
   octokit: Octokit,
 
@@ -32,7 +33,7 @@ export default class ReportGenerator {
     const config = this.config;
     const collector = new DataCollector(config.octokit, config.repository);
 
-    return collector.getPayload(config.sarifReportDirectory)
+    return collector.getPayload(config.sarifReportDirectory, config.vulnAlert)
       .then(reportData => {
         const reportTemplate = new Template(config.templating.directory);
         return reportTemplate.render(reportData.getJSONPayload(), config.templating.name);
