@@ -48,7 +48,7 @@ module.exports = function (robot) {
 
     fetcher.download('782078')//TODO need to store and inject this
       .then(revisionInfo => {
-        return puppeteer.launch({ args: ['--no-sandbox --disable-setuid-sandbox'], executablePath: revisionInfo.executablePath })
+        return puppeteer.launch({ args: ['--no-sandbox','--disable-setuid-sandbox'], executablePath: revisionInfo.executablePath })
           .then(browser => {
             return browser.newPage()
               .then(page => {
