@@ -6,7 +6,7 @@ process.env.TZ = 'UTC'
 module.exports = function (robot) {
   robot.on(['create', 'workflow_dispatch', 'repository_dispatch'], (context) => {
 
-    context.paylad.alert.affected_package_name
+    if(context.payload.alert){
     let html = { content: `
     <html>
     <body>
@@ -18,6 +18,19 @@ module.exports = function (robot) {
     </body>
     </html>
     ` };
+    }else{
+      let html = { content: `
+      <html>
+      <body>
+      <h1>$A new Vulnerability has been found in your dependencies</h1><hr>
+      <ul>
+        <li>Package name: data-tbd</li>
+        <li>Affected range: tbd</li>
+      </ul>
+      </body>
+      </html>
+      ` };
+    }
 
     const fetcher = puppeteer.createBrowserFetcher({ path: process.env.GITHUB_WORKSPACE });
 
