@@ -8,7 +8,7 @@ module.exports = robot => {
     
   robot.on(['create','workflow_dispatch','repository_dispatch'], (context)=> {
       console.log(context.payload)
-      let options = { format: 'A4',path:process.env.GITHUB_WORKSPACE };
+      let options = { format: 'A4',path:process.env.GITHUB_WORKSPACE+'/vulnerability-alert.pdf' };
 
         let file = { content: "<h1>Welcome to html-pdf-node</h1>" };
 
