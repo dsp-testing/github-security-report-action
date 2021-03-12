@@ -1,9 +1,10 @@
 import ReportGenerator from './ReportGenerator';
-
+const github = require('@actions/github');
 import * as core from '@actions/core';
 import { Octokit } from '@octokit/rest';
 
 async function run(): Promise<void> {
+  
   
   let temp_event = {
   "action": "vuln_alert_created",
